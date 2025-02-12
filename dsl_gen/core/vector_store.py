@@ -109,9 +109,7 @@ def _process_file(file_path: str,preprocessmethod) -> List[Document]:
     headers_to_split_on = [("#", "Header 1"),
                            ("##", "Header 2"),
                            ('###', "Header 3")]
-
-    # markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n", "\n\n"]
-    markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n"]
+    markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n", "\n\n"]
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             raw_content = f.read()
