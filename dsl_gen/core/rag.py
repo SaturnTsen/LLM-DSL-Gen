@@ -54,7 +54,7 @@ def retrieve_docs(state: RAGState) -> RAGState:
     if CFG.EMBEDDING_CFG.embedding_method == "plain":
         docs = _retrieve_docs(query)
     elif CFG.EMBEDDING_CFG.embedding_method == "pack":
-        docs = _retrieve_docs(query,preprocess_method="pack")
+        docs = _retrieve_docs(query, preprocess_method="pack")
     else:
         raise ValueError(f"Unsupported packing method: {CFG.EMBEDDING_CFG.embedding_method}")
     logger.info(f"Retrieved {len(docs)} docs")
