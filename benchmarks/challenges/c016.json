@@ -1,6 +1,0 @@
-{
-  "question": "We will consider a time span from 01/Jan/2005 to 31/Jan/2005. Create a table `Products` with 3 columns `Name`, `Origin` and `Factor` of several rows. Then, cross the table `Product` with `date`. Make up a column `Quantity` to the crossed table by each product.",
-  "answer": "```envision\n\nkeep span date = [ date(2005, 1, 1) .. date(2005, 1, 31) ]\n\ntable Products = with\n  [| as Name, as Origin,   as Factor |]\n  [| \"banana\",   \"Morocco\",    1.6     |]\n  [| \"apple\",    \"France\",     2.1      |]\n  [| \"orange\",   \"Germany\",    2.3     |]\n  [| \"melon\",    \"China\",      2.7     |]\n  \ntable PD = cross(Products, Day)\n \n// Made-up quantities varying per product and per date\n// Products.Price and date is broadcasted to the cross table PD\nPD.Quantity = (date - date(2005, 1, 1)) * Products.Factor\n```",
-  "ref": "",
-  "type": "coding"
-}

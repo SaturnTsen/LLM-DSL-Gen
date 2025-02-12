@@ -69,7 +69,19 @@ def _load_cached_vectorstore(vecdb_path: str, embeddings: Embeddings) -> Optiona
 TAB_REPLACEMENT = "輁"
 SPACE_REPLACEMENT = "鶨"
 
-
+code_placeholders={}
+def pack_code(text):
+    pattern = re.compile(r'```envision(.*?)```', re.DOTALL)
+    matches = pattern.findall(text)
+    for i, match in enumerate(matches):
+        placeholder = f"{{{{CODE_SNIPPET_{i}}}}}"
+        code_placeholders[placeholder] = match.strip()
+        text = text.replace(f"```envision{match}```", placeholder)
+    return text
+def depack_code(text):
+    for placeholder, code in code_placeholders.items():
+        text = text.replace(placeholder, f"```envision\n{code}\n```")
+    return text
 def replace_leading_whitespace(text: str) -> str:
     # Auxiliary functions for _process_file
     """Replace leading whitespace with special characters"""
@@ -92,18 +104,21 @@ def restore_leading_whitespace(text: str) -> str:
     return text
 
 
-def _process_file(file_path: str) -> List[Document]:
+def _process_file(file_path: str,preprocessmethod) -> List[Document]:
 
     headers_to_split_on = [("#", "Header 1"),
                            ("##", "Header 2"),
                            ('###', "Header 3")]
 
-    markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n", "\n\n"]
-
+    # markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n", "\n\n"]
+    markdown_separators = ["\n#{1,3} ", "\n\\*\\*\\*+\n"]
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             raw_content = f.read()
 
+        # phase 0: pack code
+        if preprocessmethod=="pack":
+            raw_content = pack_code(raw_content)
         # Phase 1: Preprocessing - Replace leading whitespace
         processed_content = replace_leading_whitespace(raw_content)
 
@@ -128,6 +143,8 @@ def _process_file(file_path: str) -> List[Document]:
             doc.page_content = restore_leading_whitespace(doc.page_content)
             # Carry original file path as metadata
             doc.metadata["source"] = file_path
+            if preprocessmethod=="pack":
+                doc.page_content = depack_code(doc.page_content)
 
         logger.debug(f"Generated {len(splits)} splits from {file_path}")
 
@@ -148,7 +165,7 @@ def get_all_markdown_files(root_dir: str) -> List[str]:
     return file_paths
 
 
-def _build_vectorstore() -> FAISS:
+def _build_vectorstore(preprocessmethod) -> FAISS:
     """带本地缓存的文档处理流程"""
     vecdb_base = CFG.PATH_CFG.VECTOR_DB_DIR
     emb_model = CFG.EMBEDDING_CFG.embedding_model
@@ -179,12 +196,12 @@ def _build_vectorstore() -> FAISS:
     try:
         from tqdm import tqdm
         for full_path in tqdm(file_paths, desc="Processing Markdown files"):
-            docs = _process_file(full_path)
+            docs = _process_file(full_path,preprocessmethod)
             all_docs.extend(docs)
     except ImportError:
         logger.warning("tqdm not found, falling back to simple for loop")
         for full_path in file_paths:
-            docs = _process_file(full_path)
+            docs = _process_file(full_path,preprocessmethod)
             all_docs.extend(docs)
 
     logger.info(
@@ -208,11 +225,11 @@ _vectorstore = None
 # All the above functions are auxiliary functions
 
 
-def get_vectorstore() -> FAISS:  # Main entry point
+def get_vectorstore(preprocessmethod) -> FAISS:  # Main entry point
     """TL;DR: Get a global vectorstore instance"""
     global _vectorstore
     if _vectorstore is None:
-        _vectorstore = _build_vectorstore()
+        _vectorstore = _build_vectorstore(preprocessmethod)
     return _vectorstore
 
 

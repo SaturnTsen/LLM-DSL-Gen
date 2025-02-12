@@ -11,16 +11,15 @@ from .vector_store import get_vectorstore
 
 logger = logging.getLogger('dsl_gen')
 
-
 # Retrieve Docs Node
 
-def _retrieve_docs(query: str, top_k: int = None) -> List[Document]:
+def _retrieve_docs(query: str, top_k: int = None,preprocessmethod="plain") -> List[Document]:
     """Enhanced retrieval function"""
 
     top_k = top_k or CFG.EMBEDDING_CFG.top_k
 
     try:
-        vectorstore = get_vectorstore()
+        vectorstore = get_vectorstore(preprocessmethod)
         # Example of a hybrid retrieval strategy: filtering based on metadata
         # TODO: Implement a more sophisticated filtering strategy
         # TODO: Add references to the RAG flow for better completion results
@@ -52,8 +51,12 @@ def retrieve_docs(state: RAGState) -> RAGState:
 
     query = state["question"]
     logger.debug(f"Retrieving docs for query: {query}")
-
-    docs = _retrieve_docs(query)
+    if CFG.EMBEDDING_CFG.embedding_method == "plain":
+        docs = _retrieve_docs(query)
+    elif CFG.EMBEDDING_CFG.embedding_method == "pack":
+        docs = _retrieve_docs(query,preprocessmethod="pack")
+    else:
+        raise ValueError(f"Unsupported packing method: {CFG.EMBEDDING_CFG.embedding_method}")
     logger.info(f"Retrieved {len(docs)} docs")
     state.update({"docs": docs})
     return state
