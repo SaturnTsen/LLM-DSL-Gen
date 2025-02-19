@@ -15,3 +15,9 @@ base_url = "http://localhost:11434/v1"
 model = "deepseek-ai/DeepSeek-R1"
 api_key = "sk-xxxx"
 base_url = "https://api.siliconflow.com/v1"
+
+# Mistral Configuration
+[MODEL_CFG.Mistral]
+model = "open-mistral-7b"
+api_key = "sk-xxxx"
+base_url = "https://api.mistral.ai/v1"
