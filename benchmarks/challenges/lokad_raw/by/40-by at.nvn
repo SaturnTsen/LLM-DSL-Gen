@@ -1,0 +1,70 @@
+///Considering the tables Catalog and Orders as given below.
+///First compute the number of sales for each car.
+///Then compute the average sell price for each color (using the order amount as value indicator).
+///Finally identify the best selling car by number of sales and best selling color by sell price. Display the results in the Catalog table.
+
+/// table Catalog = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "red" , 150000 |]
+///
+/// table Orders = with
+///   [|as Car, as Color, as OrderQty, as OrderAmount, as OrderDate|]
+///   [|"Clio", "green", 2, 35000, date(2024, 7, 6)|]
+///   [|"Clio", "green", 1, 20000, date(2024, 7, 19)|]
+///   [|"Clio", "green", 1, 19000, date(2024, 8, 10)|]
+///   [|"Clio", "green", 3, 57000, date(2024, 9, 9)|]
+///   [|"Clio", "red", 1, 25000, date(2024, 7, 17)|]
+///   [|"Clio", "red", 1, 26000, date(2024, 8, 5)|]
+///   [|"Megane", "yellow", 1, 20500, date(2024, 8, 1)|]
+///   [|"Megane", "yellow", 1, 23000, date(2024, 8, 18)|]
+///   [|"Hummer", "red", 1, 155000, date(2024, 6, 29)|]
+
+
+///ANSWER
+table Catalog = with
+  [| as Car, as Color|]
+  [| "Clio", "red"|]
+  [| "Clio", "green"|]
+  [| "Megane", "yellow"|]
+  [| "Megane", "black"|]
+  [| "Hummer", "red"|]
+
+table Orders = with
+  [|as Car, as Color, as OrderQty, as OrderAmount|]
+  [|"Clio", "green", 2, 35000|]
+  [|"Clio", "green", 1, 20000|]
+  [|"Clio", "green", 1, 19000|]
+  [|"Clio", "green", 3, 57000|]
+  [|"Clio", "red", 1, 25000|]
+  [|"Clio", "red", 1, 26000|]
+  [|"Megane", "yellow", 1, 20500|]
+  [|"Hummer", "red", 1, 155000|]
+
+// compute the number of sales per car by aggregating from the 'Order' table into the 'Catalog' table
+Catalog.NbSalesCar = count(Orders.*) by Orders.Car at Catalog.Car
+
+// compute the average sell price per color by aggregating from the 'Order' table into the 'Catalog' table
+Catalog.AvgSellPriceColor = avg(Orders.OrderAmount / Orders.OrderQty) by Orders.Color at Catalog.Color
+
+// identify the best selling car
+// step 1: compute the maximum number of sales per car overall
+maxNbSalesCar = max(Catalog.NbSalesCar)
+Catalog.IsBestsellerCar = Catalog.NbSalesCar == maxNbSalesCar
+// identify the best selling color
+maxSellPriceColor = max(Catalog.AvgSellPriceColor)
+Catalog.IsBestsellerColor = Catalog.AvgSellPriceColor == maxSellPriceColor
+
+// display the 'Catalog' table with the results
+// use the stylecode {booleans: "✔️/❌"} to aesthetically display the booleans
+// use the stylecode {unit: "€"} to display the price currency
+show table "Catalog" {booleans: "✔️/❌"} with
+  Catalog.Car
+  Catalog.Color
+  Catalog.NbSalesCar
+  Catalog.IsBestsellerCar
+  Catalog.AvgSellPriceColor {unit: "€"}
+  Catalog.IsBestsellerColor

@@ -1,0 +1,54 @@
+///02-write - basic write with column renaming
+
+
+/// The keyword write introduces a block used to define a section of vectors, associated to a given table,
+/// to be persisted as a flat file stored in file hosting service named BigFiles.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Store this table with its three vectors on BigFiles in a repertory clean by changing vector named Product into Article
+
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+write Products as "/clean/Products.ion" with
+  Article = Products.Product
+  Color = Products.Color
+  Price = Products.Price
+
+show markdown "" with """
+
+# 02-write : basic write with column renaming
+
+## Statement
+
+The keyword write introduces a block used to define a section of vectors, associated to a given table,
+to be persisted as a flat file stored in file hosting service named BigFiles.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Store this table with its three vectors on BigFiles in a repertory clean by changing vector named Product into Article
+
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+write Products as "/clean/Products.ion" with
+  Article = Products.Product
+  Color = Products.Color
+  Price = Products.Price
+
+"""

@@ -1,0 +1,33 @@
+///Considering the table Input as given below, create a table Catalog from the table Input with every combination of Car and Color.
+///Display the table Catalog.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+// Cloned from '/LLM/by/1-by' on 2024-11-08
+
+///ANSWER
+table Input = with
+  [| as Car, as Color |]
+  [| "Clio", "red" |]
+  [| "Clio", "green" |]
+  [| "Megane", "yellow" |]
+  [| "Megane", "yellow" |]
+  [| "Megane", "black" |]
+  [| "Hummer", "gold" |]
+
+// create the 'Catalog' table in 2 steps
+// step 1: define the 'Catalog' table using the 'by' keyword
+table Catalog = by [Input.Car, Input.Color]
+// step 2: create the primary columns by aggregating from the 'Input' table into the 'Catalog' table
+Catalog.Car = same(Input.Car)
+Catalog.Color = same(Input.Color)
+
+// display the 'Catalog' table
+show table "Catalog" with
+  Catalog.Car
+  Catalog.Color

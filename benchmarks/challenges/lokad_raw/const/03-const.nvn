@@ -1,0 +1,34 @@
+///03-Const
+
+///The const keyword indicates that the value taken by a variable is known at compile time and that
+///it won’t change later at runtime. Those variables are primarily intended to control the files
+///being read.
+///Consider the stockouts snapshots "/clean/snapshots/Stockouts_YYYY-MM.ion" which contain 3 columns:
+/// - a text "UId" uniquely identifying a product
+/// - a date "SnapshotDate" tracking when the snapshot file was produced
+/// - a boolean "IsOOS" tracking if the product is stocked-out for that period.
+///Read the stockout snapshot from two months ago using regular path.
+///Display the ratio product stocked-out and the period in a summary.
+
+///ANSWER
+
+const todayMonthMinus2 = month(today())-2 //current month - 2
+
+read "/clean/snapshots/Stockouts_\{todayMonthMinus2}.ion" as Stockouts expect[date] with //date is a secondary dimension for Stockouts based on "SnapshotDate"
+  UId: text
+  "SnapshotDate" as date : date //must realias the column SnapshotDate to its dimension date
+  IsOOS : boolean
+
+
+show summary "Out of stocked products" with
+  same(date) as "Period"
+  ratio(Stockouts.IsOOS) as "OSS ratio" {numbers: percent}
+
+
+
+///autres idées
+//const sur une user def
+//const qui switch en fonction de la date ?
+//const dans un module https://lokad.atlassian.net/browse/LK-8586
+// https://lokad.atlassian.net/browse/LK-8402
+// https://lokad.atlassian.net/browse/LK-6834 = OG feature ticket

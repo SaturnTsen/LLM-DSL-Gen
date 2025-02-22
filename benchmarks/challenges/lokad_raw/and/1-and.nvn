@@ -1,0 +1,43 @@
+/// Create a table named ColorCar that contains 3 lines. There must be columns named Car, Color and Size.
+/// The first car, named Clio, is red and 3 meters long. The second car, named Megane, is green and 5 meters long. The third car, named Hummer, is red and 9 meters long.
+/// Create a Boolean to select a car if the color is red and the height is greater than 4 meters.
+/// Display cars if this Boolean is true.
+
+/// ANSWER
+table ColorCar = with // hard-coding a table
+  [| as Car, as Color, as Size   |] // column header
+  [| "Clio", "red" , 3 |]
+  [| "Megane", "green" , 5 |]
+  [| "Hummer", "gold" , 9 |]
+
+
+ColorCar.IsSelected = ColorCar.Color == "red" and ColorCar.Size > 4
+
+where ColorCar.IsSelected
+  show table "Selected Car" with
+    ColorCar.Car
+
+
+show markdown "" with """
+
+Create a table named ColorCar that contains 3 lines. There must be columns named Car, Color and Size.
+The first car, named Clio, is red and 3 meters long. The second car, named Megane, is green and 5 meters long. The third car, named Hummer, is red and 9 meters long.
+Create a Boolean to select a car if the color is red and the height is greater than 4 meters.
+/// Display cars if this Boolean is true.
+
+# ANSWER
+```
+table ColorCar = with // hard-coding a table
+  [| as Car, as Color, as Size   |] // column header
+  [| "Clio", "red" , 3 |]
+  [| "Megane", "green" , 5 |]
+  [| "Hummer", "gold" , 9 |]
+
+
+ColorCar.IsSelected = ColorCar.Color == "red" and ColorCar.Size > 4
+
+where ColorCar.IsSelected
+  show table "Selected Car" with
+    ColorCar.Car
+```
+""""

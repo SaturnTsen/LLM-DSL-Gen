@@ -1,0 +1,32 @@
+///05-desc
+///The desc keyword is an option for a process call. When desc is present, the ordering of the iteration is inverted.
+///When the scan takes a tuple, the desc option can be indepently applied to every element of the tuple, i.e. scan [a desc, b, c desc].
+
+///The desc keyword is an option for a table tile block. When desc is present, the ordering of the table is inverted.
+///When the order by takes a tuple as argument, the desc keyword can remain outside the tuple: order by [a, b, c] desc
+///or applied individually inside the tuple to offer an ordering control over each element that makes the tuple: order by [a desc, b, c desc].
+
+
+///Considering the table Items as given below, display the table sorted by Damage in descending order, Cost in descending order.
+/// table Items = with
+///   [| as Item,         as Cost,  as Damage,  as Strength      |]
+///   [| "Tango",         90     ,    0       ,  0               |]
+///   [| "Observer ward", 0      ,    0       ,  0               |]
+///   [| "Bracer",        505    ,    0       ,  5               |]
+///   [| "Reaver",        2700   ,    0       ,  25              |]
+///   [| "Divine rapier", 5600   ,    100     ,  0               |]
+
+///ANSWER
+table Items = with
+  [| as Item,         as Cost,  as Damage,  as Strength      |]
+  [| "Tango",         90     ,    0       ,  0               |]
+  [| "Observer ward", 0      ,    0       ,  0               |]
+  [| "Bracer",        505    ,    0       ,  5               |]
+  [| "Reaver",        2700   ,    0       ,  25              |]
+  [| "Divine rapier", 5600   ,    100     ,  0               |]
+
+show table "Items" with
+  Items.Item
+  Items.Strength
+  Items.Cost
+  order by [Items.Strength, Items.Cost] desc //would also work with [Items.Strength desc, Items.Cost desc]

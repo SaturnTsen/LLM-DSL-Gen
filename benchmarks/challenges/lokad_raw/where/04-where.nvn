@@ -1,0 +1,93 @@
+///04-where - keep where
+
+/// The keyword "where" generally denotes a table being filtered in Envision.
+/// Using "keep where" also filters one or several but avoiding indentation.
+
+/// Consider table named "Products" where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+/// Remove all occurences of "Ref" == "3" in all tables with "Ref" dimension.
+/// Then display the tables
+
+/// ANSWER
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 15.75    |]
+expect Orders.Ref = Orders.Id
+
+keep where Ref != 3 // This filter all tables containing Dimension "Ref"
+
+show table "Products" with
+  Products.Ref
+  Products.Product
+  Products.Color
+  Products.Price
+
+show table "Orders" with
+  Orders.Ref
+  Orders.Id
+  Orders.Product
+  Orders.Qty
+  Orders.Amount
+
+show markdown "" with """
+
+# 04-where - keep where
+
+## Statement
+
+The keyword "where" generally denotes a table being filtered in Envision.
+Using "keep where" also filters one or several but avoiding indentation.
+
+Consider table named "Products" where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Remove all occurences of "Ref" == "3" in all tables with "Ref" dimension.
+Then display the tables
+
+## Envision Code
+
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 15.75    |]
+expect Orders.Ref = Orders.Id
+
+keep where Ref != 3 // This filter all tables containing Dimension "Ref"
+
+show table "Products" with
+  Products.Ref
+  Products.Product
+  Products.Color
+  Products.Price
+
+show table "Orders" with
+  Orders.Ref
+  Orders.Id
+  Orders.Product
+  Orders.Qty
+  Orders.Amount
+"""

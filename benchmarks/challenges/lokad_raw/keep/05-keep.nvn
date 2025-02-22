@@ -1,0 +1,49 @@
+///05-keep
+///The keyword keep has two uses in Envision, either to avoid an identation, or to define the state of a process.
+///When the keyword keep appears at the start of a where statement, the filter applies until the end of scope.
+///When the keyword keep appears at the start of a span statement, the UNfilter applies until the end of the scope.
+///At the beginning of a process block, the variables that are part of the state of the process can be declared with the keyword keep.
+///In a for loop that enumerates the values of a column, the keyword keep is used to declare the variables part of the state of the loop.
+///Idem, with a each loop, that enumerates the lines of a table
+
+///Consider the script below.
+///1. How many lines are displayed in the "First" show table?
+///2. How many lines are displayed in the "Second" show table?
+///3. How many lines are displayed in the "Third" show table?
+
+table Products[ref] = with
+  [| as ref , as Product, as Color    , as Price |]
+  [| "1"      , "shirt"   , "white,grey", 10.50    |]
+  [| "2"      , "pants"   , "blue"      , 15.00    |]
+  [| "3"      , "hat"     , "red"       , 5.25     |]
+
+table Orders[orderid] = with
+  [| as orderid, as ProductRef, as OrderDate , as Qty|]
+  [| "order-1" , "1"     , date(2024,1,18)   , 4     |]
+  [| "order-2" , "2"     , date(2024,3,15)   , 1     |]
+  [| "order-3" , "1"     , date(2024,7,21)   , 2     |]
+  [| "order-4" , "1"     , date(2024,8,6)    , 2     |]
+  [| "order-5" , "1"     , date(2024,9,19)   , 1     |]
+  [| "order-6" , "3"     , date(2024,10,4)   , 1     |]
+expect Orders.ref = Orders.ProductRef
+
+
+show table "First" with
+  Orders.orderid
+
+keep where Products.ref == "1"
+
+show table "Second" with
+  Orders.orderid
+
+where Orders.Qty > 1
+  show table "Third" with
+    Orders.orderid
+
+///ANSWER
+///1. No filter is applied, the number of lines in the "First" show is the number of lines in Orders i.e 6
+///2. A keep filter on primary dimension "ref" in Products is applied to keep only Product "1".
+///Since the Orders table is downstream Products and linked through the "ref" dimension, the Orders table is also filtered on "1" only.
+///Therefore "Second" only shows 4 lines.
+///3. A where filter is applie to the Orders table to select only lines with Qty > 1. But the previous filter on ref == "1"
+///was applied with a keep therefore this filter is still in effect and combines with Qty > 1, the "Third" show has 3 lines.

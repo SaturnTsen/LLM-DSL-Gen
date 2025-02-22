@@ -1,0 +1,36 @@
+/// Read the file “/clean/orders.ion” with the columns “OrderId”, “Qty” and “InitDate” and name it “OrdersTable”.
+/// Display the OrdersTable and rename the “InitDate” column to “Order Date”.
+
+/// ANSWER
+
+read "/clean/orders.ion" as OrdersTable with
+  OrderId : text
+  Qty : number
+  InitDate : date
+
+show table "OrdersTable"  with
+  OrdersTable.OrderId
+  OrdersTable.Qty
+  OrdersTable.InitDate as "Order Date"
+
+
+show markdown "" with """
+
+/// Read the file “/clean/orders.ion” with the columns “OrderId”, “Qty” and “InitDate” and name it “OrdersTable”.
+/// Display the OrdersTable and rename the “InitDate” column to “Order Date”.
+
+/// ANSWER
+
+
+read "/clean/orders.ion" as OrdersTable with
+  OrderId : text
+  Qty : number
+  InitDate : date
+
+show table "OrdersTable"  with
+  OrdersTable.OrderId
+  OrdersTable.Qty
+  OrdersTable.InitDate as "Order Date"
+
+
+""""

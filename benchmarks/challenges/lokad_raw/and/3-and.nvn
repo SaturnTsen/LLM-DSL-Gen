@@ -1,0 +1,61 @@
+/// What are the values of A, B and C as computed by the script below?
+
+table ColorCar = with
+  [| as Car, as Color, as Size  , as Price |] // column header
+  [| "Clio",    "red" , 3 , 10k   |]
+  [| "Megane", "green" , 5 , 11k  |]
+  [| "Hummer", "gold" , 9 , 60k   |]
+  [| "Porche", "red" , 3 ,100k    |]
+  [| "Mini",   "red" , 5 , 45k    |]
+  [| "Hummer 2", "gold" , 12 , 70k |]
+
+
+show scalar "A" with avg(ColorCar.Price) when(ColorCar.Price < 70k and ColorCar.Size <= 7)
+
+
+where not ( ColorCar.Color == "Gold") and ColorCar.Price >= 20k
+  show scalar "B" with avg(ColorCar.Price)
+
+
+show scalar "C" with avg(ColorCar.Price)
+
+/// ANSWER
+/// The A value is the average of the Price column when the price is less than 70,000 and the size is less than or equal to 7. Thus, A = (10k + 11k + 45k) / 3 = 22k
+
+/// The B value is the average of the Price column when the price is greater than or equal to 20,000 and the color is not gold. Thus, B = (100k + 45k ) / 2 = 72500
+
+/// The value C is the average of the Price column. Thus, C = (10k + 11k + 60k + 100k + 45k + 70k) / 6 = 98666,66
+
+
+show markdown "" with """
+
+What are the values of A, B and C as computed by the script below?
+
+```
+table ColorCar = with
+  [| as Car, as Color, as Size  , as Price |] // column header
+  [| "Clio",    "red" , 3 , 10k   |]
+  [| "Megane", "green" , 5 , 11k  |]
+  [| "Hummer", "gold" , 9 , 60k   |]
+  [| "Porche", "red" , 3 ,100k    |]
+  [| "Mini",   "red" , 5 , 45k    |]
+  [| "Hummer 2", "gold" , 12 , 70k |]
+
+
+show scalar "A" with avg(ColorCar.Price) when(ColorCar.Price < 70k and ColorCar.Size <= 7)
+
+
+where not ( ColorCar.Color == "Gold") and ColorCar.Price >= 20k
+  show scalar "B" with avg(ColorCar.Price)
+
+
+show scalar "C" with avg(ColorCar.Price)
+```
+
+# ANSWER
+
+The A value is the average of the Price column when the price is less than 70,000 and the size is less than or equal to 7. Thus, A = (10k + 11k + 45k) / 3 = 22k
+The B value is the average of the Price column when the price is greater than or equal to 20,000 and the color is not gold. Thus, B = (100k + 45k ) / 2 = 72500
+The value C is the average of the Price column. Thus, C = (10k + 11k + 60k + 100k + 45k + 70k) / 6 = 98666,66
+
+""""

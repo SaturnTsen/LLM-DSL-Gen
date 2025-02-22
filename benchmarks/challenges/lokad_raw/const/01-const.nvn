@@ -1,0 +1,20 @@
+///01-Const
+
+///The const keyword indicates that the value taken by a variable is known at compile time and that
+///it won’t change later at runtime. Those variables are primarily intended to control the files
+///being read.
+///Consider the file "/clean/Catalog.ion" which contains 2 columns:
+/// - a text "UId" uniquely identifying a product
+/// - a date "LaunchDate" tracking when the product was first launched.
+///Store the path to the folder in a const variable and read the file using a regular path. Display the table.
+
+///ANSWER
+
+const path = "/clean/" //the path must be declared as a const to be used as a compile-time variable. Path schemas use single quote '' while regular path use double quotes ""
+read "\{path}/Catalog.ion" as Catalog[id] with //"id" is the primary dimension of Catalog, based on "UId" in the file
+  "UId" as id : text
+  LaunchDate : date
+
+show table "Catalog" with
+  id as "id"
+  Catalog.LaunchDate

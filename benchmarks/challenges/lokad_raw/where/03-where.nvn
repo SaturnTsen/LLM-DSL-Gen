@@ -1,0 +1,70 @@
+///03-where - Multiple where
+
+/// The keyword "where" generally denotes a table being filtered in Envision
+
+/// Consider table named "Products" where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+/// And table "Orders" containing columns Orderdate, Id, Product, Qty and Amount.
+/// Rewrite vector "Amount" for Ref == 3 (Product == "hat"), and only if Qty sold was greater or equal than 3 by applying 5% discount on Amount
+
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 15.75    |]
+expect Orders.Ref = Orders.Id
+
+where Ref == 3 // This filter all tables containing Dimension "Ref"
+  where Orders.Qty >= 3
+    Orders.Amount = (1 - 0.05) * (Orders.Amount)
+
+show markdown "" with """
+
+# 03-where - Multiple where
+
+## Statement
+
+The keyword "where" generally denotes a table being filtered in Envision
+
+Consider table named "Products" where three vectors are defined :
+ - Product
+ - Color
+ - Price
+And table "Orders" containing columns Orderdate, Id, Product, Qty and Amount.
+Rewrite vector "Amount" for Ref == 3 (Product == "hat"), and only if Qty sold was greater or equal than 3 by applying 5% discount on Amount
+
+
+## Envision Code
+
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 15.75    |]
+expect Orders.Ref = Orders.Id
+
+where Ref == 3 // This filter all tables containing Dimension "Ref"
+  where Orders.Qty >= 3
+    Orders.Amount = (1 - 0.05) * (Orders.Amount)
+
+"""

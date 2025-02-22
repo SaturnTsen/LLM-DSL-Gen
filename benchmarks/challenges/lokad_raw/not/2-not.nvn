@@ -1,0 +1,104 @@
+///2-not
+
+
+/// The keyword 'not 'is used to return the negation of a boolean.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+
+/// and two tables named Catalog_Store_A and Catalog_Store_B where 2 vectors are defined :
+///  - Product
+///  - Stock
+/// The tables Catalog_Store provide the catalog of products available in each store and the related stock available.
+
+/// Display a table with the products and their prices only if a product appears in the catalog of Store A and not in Store B.
+
+table Products = with
+  [| as Product  , as Color    , as Price |]
+  [| "shirt"     , "white,grey", 10.50    |]
+  [| "pants"     , "blue"      , 15.00    |]
+  [| "hat"       , "red"       , 5.25     |]
+  [| "big hat"   , "red"       , 20     |]
+  [| "jeans"     , "blue"      , 10     |]
+
+table Catalog_Store_A  = with
+  [| as Product  , as Stock  |]
+  [| "shirt"     ,  1  |]
+  [| "pants"     ,  4  |]
+  [| "hat"       ,  5  |]
+  [| "big hat"   ,  10 |]
+  [| "jeans"     ,  3  |]
+
+
+table Catalog_Store_B  = with
+  [| as Product  , as Stock  |]
+  [| "shirt"     ,  12  |]
+  [| "pants"     ,  2 |]
+  [| "hat"       ,  15  |]
+  [| "jeans"     ,  32  |]
+
+///# ANSWER
+where Products.Product in Catalog_Store_A.Product  and not( Products.Product in Catalog_Store_B.Product )
+  show table "Products" with
+    Products.Product
+    Products.Price
+
+
+///# ANSWER
+
+show markdown "" with """
+
+## Statement
+
+The keyword 'not 'is used to return the negation of a boolean.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+and two tables named Catalog_Store_A and Catalog_Store_B where 2 vectors are defined :
+ - Product
+ - Stock
+The tables Catalog_Store provide the catalog of products available in each store and the related stock available.
+
+Display a table with the products and their prices only if a product appears in the catalog of Store A and not in Store B.
+
+## Envision Code
+```
+table Products = with
+  [| as Product  , as Color    , as Price |]
+  [| "shirt"     , "white,grey", 10.50    |]
+  [| "pants"     , "blue"      , 15.00    |]
+  [| "hat"       , "red"       , 5.25     |]
+  [| "big hat"   , "red"       , 20     |]
+  [| "jeans"     , "blue"      , 10     |]
+
+table Catalog_Store_A  = with
+  [| as Product  , as Stock  |]
+  [| "shirt"     ,  1  |]
+  [| "pants"     ,  4  |]
+  [| "hat"       ,  5  |]
+  [| "big hat"   ,  10 |]
+  [| "jeans"     ,  3  |]
+
+
+table Catalog_Store_B  = with
+  [| as Product  , as Stock  |]
+  [| "shirt"     ,  12  |]
+  [| "pants"     ,  2 |]
+  [| "hat"       ,  15  |]
+  [| "jeans"     ,  32  |]
+
+```
+
+# ANSWER
+```
+where Products.Product in Catalog_Store_A.Product  and not( Products.Product in Catalog_Store_B.Product )
+  show table "Products" with
+    Products.Product
+    Products.Price
+
+```
+"""

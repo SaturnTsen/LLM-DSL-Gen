@@ -1,0 +1,48 @@
+///01-keep
+///The keyword keep has two uses in Envision, either to avoid an identation, or to define the state of a process.
+///When the keyword keep appears at the start of a where statement, the filter applies until the end of scope.
+///When the keyword keep appears at the start of a span statement, the UNfilter applies until the end of the scope.
+///At the beginning of a process block, the variables that are part of the state of the process can be declared with the keyword keep.
+///In a for loop that enumerates the values of a column, the keyword keep is used to declare the variables part of the state of the loop.
+///Idem, with a each loop, that enumerates the lines of a table
+
+///Consider the table named "Products" with primary dimension "ref" and three additional vectors "Product", "Color", "Price":
+/// - ref: uuid of the product, primary dimension of the table
+/// - Product: the product type
+/// - Color: the color of the product
+/// - Price: the unit price of the product
+///Consider additionally, the table named "Orders" with primary dimension "orderid" with secondary dimension "ref" and additional vectors "OrderDate", "Qty":
+///- ref: uuid of the product, secondary dimension of the table
+///- OrderDate: the date at which the product was ordered
+///- Qty: the quantity ordered for
+///Filter the Orders table, using the keyword keep to only show orders where multiple quantities have been bought.
+///Display the tables within the filtered scope.
+
+
+table Products[ref] = with
+  [| as ref , as Product, as Color    , as Price |]
+  [| "1"      , "shirt"   , "white,grey", 10.50    |]
+  [| "2"      , "pants"   , "blue"      , 15.00    |]
+  [| "3"      , "hat"     , "red"       , 5.25     |]
+
+table Orders[orderid] = with
+  [| as orderid, as ProductRef, as OrderDate , as Qty|]
+  [| "order-1" , "1"     , date(2024,1,18)   , 4     |]
+  [| "order-2" , "2"     , date(2024,3,15)   , 1     |]
+  [| "order-3" , "1"     , date(2024,7,21)   , 2     |]
+  [| "order-4" , "1"     , date(2024,8,6)    , 2     |]
+  [| "order-5" , "1"     , date(2024,9,19)   , 1     |]
+  [| "order-6" , "3"     , date(2024,10,4)   , 1     |]
+expect Orders.ref = Orders.ProductRef
+
+///ANSWER
+keep where Orders.Qty > 1 //this filters ONLY the Orders table and this filter is persisted through the whole script since we used keep
+
+show table "Orders" with
+  Orders.orderid
+  Orders.ref
+  Orders.OrderDate
+  Orders.ProductRef
+  Orders.Qty
+
+

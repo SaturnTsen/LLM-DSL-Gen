@@ -75,7 +75,7 @@ def judge_answer(state: RAGState) -> RAGState:
         )
 
         # Call LLM and parse response
-        client = getClient(CFG.JUDGE.active_model)
+        client = getClient(CFG.JUDGE.active_model, CFG.JUDGE.temperature)
         response = client.invoke(messages)
 
         logger.info("Judgment: %s", response.content)

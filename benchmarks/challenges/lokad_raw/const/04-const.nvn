@@ -1,0 +1,33 @@
+///04-Const (NB: can't be NVN6 because of user def)
+
+///The const keyword indicates that the value taken by a variable is known at compile time and that
+///it won’t change later at runtime. Those variables are primarily intended to control the files
+///being read.
+///Consider two files with the same structure "/clean/ref/Catalog.ion" and "/clean/sim/Catalog.ion" which contain 3 columns:
+/// - a text "UId" uniquely identifying a product, it is the primary dimension.
+/// - a number "BuyPrice" representing a buying price reference
+///The file in /ref/ is the current production file. The file in /sim/ is a simulation file.
+///Create a user defined function which will decide which subfolder, ref or sim should be read. The
+///sim folder should be read if the today() date of the script is 2024-12-30 else it's should be the
+///ref folder being read. Make sure to flag your function as const.
+
+///Read the Catalog file from the correct folder assuming today is 2024-12-30.
+///Display the date considered and the average of the BuyPrice found in the file in a summary.
+
+///ANSWER
+
+def const pure folderPath(t: date, date_sim: date) with
+  p = if t == date_sim then "/sim" else "/ref"
+  return p
+
+const fpath = folderPath(today(), date(2024,12,30))
+
+read "/clean/\{fpath}/Catalog.ion" as Catalog[ref] with
+  "UId" as ref : text
+  BuyPrice : number
+
+show summary "Out of stocked products" with
+  today() as "Date considered"
+  avg(Catalog.BuyPrice) as "Avg BuyPrice" {numbers: simple; unit:"€"}
+
+

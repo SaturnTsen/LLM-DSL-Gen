@@ -1,0 +1,51 @@
+///01-write : basic write
+
+/// The keyword write introduces a block used to define a section of vectors, associated to a given table,
+/// to be persisted as a flat file stored in file hosting service named BigFiles.
+
+/// Consider table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Store this a table with its three vectors on BigFiles in a repertory clean.
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+write Products as "/clean/Products.ion" with
+  Product = Products.Product
+  Color = Products.Color
+  Price = Products.Price
+
+show markdown "" with """
+
+# 01-write : basic write
+
+## Statement
+The keyword write introduces a block used to define a section of vectors, associated to a given table,
+to be persisted as a flat file stored in file hosting service named BigFiles.
+
+Consider table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+ Store this table with its three vectors on BigFiles in a repertory clean.
+
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+write Products as "/clean/Products.ion" with
+  Product = Products.Product
+  Color = Products.Color
+  Price = Products.Price
+
+"""

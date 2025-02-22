@@ -1,0 +1,28 @@
+///Considering the table Input as given below, create a table Car from the table Input with the values from the column Car.
+///Display the table Car.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car|]
+  [| "Clio"|]
+  [| "Clio" |]
+  [| "Megane"|]
+  [| "Megane"|]
+  [| "Hummer"|]
+
+// create the 'Car' table in 2 steps
+// step 1: define the 'Car' table using the 'by' keyword
+table Car = by Input.Car
+// step 2: create the primary column by aggregating from the 'Input' table into the 'Car' table
+Car.Car = same(Input.Car)
+
+// display the 'Car' table
+show table "Car" with
+  Car.Car

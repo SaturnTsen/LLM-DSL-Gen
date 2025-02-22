@@ -1,0 +1,25 @@
+///Considering the table Input as given below, display a barchart comparing the average price per Car model.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// display the barchart
+// use the stylecode {unit: "$"} to display the price currency
+show barchart "Average price per car" with
+  avg(Input.Price) {unit: "$"}
+  group by Input.Car

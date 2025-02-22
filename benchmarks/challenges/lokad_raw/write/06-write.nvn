@@ -1,0 +1,81 @@
+///06-write - write several files using "partitioned" keyword and bounds
+
+/// The keyword "write" introduces a block used to define a section of vectors, associated to a given table,
+/// to be persisted as a flat file stored in file hosting service named BigFiles.
+/// The contextual keyword "partitioned" modifies the behavior of the write block: several files can be written at once.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Store the data in "Products" table into several tables partitioned by "Color" values on BigFiles in a repertory clean.
+///  Use a schema with columns "Product", "Color" and "Price"
+///  Use a path schema with vector "Color" as the one use for partitioning
+///  Do not export tables where "Color" values are alphabetically lower than "d"
+
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+schema Products with
+  Product : text
+  Color : text
+  Price : number
+
+schema '/clean/Products_\{Color}.ion' with
+  schema Products
+
+letter_d = "d"
+where Products.Color > letter_d
+  write Products partitioned as '/clean/Products_\{letter_d..}.ion'
+/// this line would write as many files as there are different values in "Color" vector, there is a technical limit at 200 files maximum.
+/// this line would would also erase all files matching path '/clean/Products_*.ion' where * is a "Color" value alphabetically greater than "d".
+
+show markdown "" with """
+
+# 06-write - write several files using "partitioned" keyword and bounds
+
+## Statement
+
+
+The keyword "write" introduces a block used to define a section of vectors, associated to a given table,
+to be persisted as a flat file stored in file hosting service named BigFiles.
+The contextual keyword "partitioned" modifies the behavior of the write block: several files can be written at once.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Store the data in "Products" table into several tables partitioned by "Color" values on BigFiles in a repertory clean.
+Use a schema with columns "Product", "Color" and "Price"
+Use a path schema with vector "Color" as the one use for partitioning
+Do not export tables where "Color" values are alphabetically lower than "d"
+
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+schema Products with
+  Product : text
+  Color : text
+  Price : number
+
+schema '/clean/Products_{Color}.ion' with
+  schema Products
+
+letter_d = "d"
+where Products.Color > letter_d
+  write Products partitioned as '/clean/Products_{letter_d..}.ion'
+/// this line would write as many files as there are different values in "Color" vector, there is a technical limit at 200 files maximum.
+/// this line would would also erase all files matching path '/clean/Products_*.ion' where * is a "Color" value alphabetically greater than "d".
+
+
+"""

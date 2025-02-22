@@ -1,0 +1,71 @@
+/// 01-if : basic if ternary operator
+
+/// The ternary operator if-then-else takes a Boolean as first argument,
+/// and two identically typed values as second and third arguments.
+/// The resulting syntax if c then a else b is treated as an expression.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+
+/// Create a third vector PriceCategory which contains two possible values
+/// - Cheap for products with a Price strictly lower than 5
+/// - Expensive for the other products
+
+/// Display the table Products with the three original vectors and the new PriceCategory vector
+
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+Products.PriceCategory = if Products.Price < 5 then "Cheap" else "Expensive"
+
+show table "Products" with
+  Products.Color
+  Products.Price
+  Products.Product
+  Products.PriceCategory
+
+
+show markdown "" with """
+
+# 01-if : basic if ternary operator
+
+## Statement
+
+The ternary operator if-then-else takes a Boolean as first argument,
+and two identically typed values as second and third arguments.
+The resulting syntax if c then a else b is treated as an expression.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+
+Create a third vector PriceCategory which contains two possible values
+- Cheap for products with a Price strictly lower than 5
+- Expensive for the other products
+
+Display the table Products with the three original vectors and the new PriceCategory vector
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+Products.PriceCategory = if Products.Price < 5 then "Cheap" else "Expensive"
+
+show table "Products" with
+  Products.Color
+  Products.Price
+  Products.Product
+  Products.PriceCategory
+
+"""

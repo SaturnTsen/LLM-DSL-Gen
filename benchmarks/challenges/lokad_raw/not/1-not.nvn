@@ -1,0 +1,59 @@
+///1-not
+
+
+/// The keyword 'not 'is used to return the negation of a boolean.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Displays the products and their prices only if the product is not red.
+
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+  [| "big hat"   , "red"       , 20     |]
+  [| "jeans"     , "blue"      , 10     |]
+
+///# ANSWER
+where not (Products.Color == "red")
+  show table "Products" with
+    Products.Product
+    Products.Price
+
+
+show markdown "" with """
+
+## Statement
+
+The keyword 'not 'is used to return the negation of a boolean.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+
+Displays the products and their prices only if the product is not red.
+
+
+## Envision Code
+```
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+```
+
+# ANSWER
+```
+where not (Products.Color == "red")
+  show table "Products" with
+    Products.Product
+    Products.Price
+
+```
+"""

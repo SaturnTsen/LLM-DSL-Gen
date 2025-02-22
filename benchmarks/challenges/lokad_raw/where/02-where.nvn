@@ -1,0 +1,69 @@
+///02-where - Filtering a dimension and several tables
+
+/// The keyword "where" generally denotes a table being filtered in Envision
+
+/// Consider table named "Products" where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+/// And table "Orders" containing columns Orderdate, Id, Product, Qty and Amount.
+/// Rewrite vector "Amount" for hat only, Ref == 3, using column "Price" from "Products" table.
+
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 18.00    |]
+expect Orders.Ref = Orders.Id
+
+where Ref == 3 // This filter all tables containing Dimension "Ref"
+  Orders.Amount = Orders.Qty * same(Products.Price) by Products.Ref at Orders.Ref
+
+show markdown "" with """
+
+# 02-where - Filtering a dimension and several tables
+
+## Statement
+
+The keyword "where" generally denotes a table being filtered in Envision
+
+Consider table named "Products" where three vectors are defined :
+ - Product
+ - Color
+ - Price
+And table "Orders" containing columns Orderdate, Id, Product, Qty and Amount.
+Rewrite vector "Amount" for hat only, Ref == 3, using column "Price" from "Products" table.
+
+## Envision Code
+
+table Products [Ref] = with
+  [| as Ref , as Product, as Color    , as Price |]
+  [|    1   , "shirt"   , "white,grey", 10.50    |]
+  [|    2   , "pants"   , "blue"      , 15.00    |]
+  [|    3   , "hat"     , "red"       , 5.25     |]
+
+table Orders = with
+  [| as OrderDate    , as Id , as Product, as Qty      , as Amount |]
+  [| date(2024,1,18) ,   1    , "shirt"   ,   1         , 10.50    |]
+  [| date(2024,3,15) ,   1    , "shirt"   ,   2         , 21.00    |]
+  [| date(2024,7,21) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,8,6)  ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,9,19) ,   2    , "pants"   ,   1         , 15.00    |]
+  [| date(2024,10,4) ,   3    , "hat"     ,   3         , 18.00    |]
+expect Orders.Ref = Orders.Id
+
+where Ref == 3 // This filter all tables containing Dimension "Ref"
+  Orders.Amount = Orders.Qty * same(Products.Price) by Products.Ref at Orders.Ref
+
+
+
+"""

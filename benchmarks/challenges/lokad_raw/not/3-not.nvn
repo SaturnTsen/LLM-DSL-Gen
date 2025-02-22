@@ -1,0 +1,69 @@
+///3-not
+
+/// The keyword 'not 'is used to return the negation of a boolean.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+
+/// Display a table with the products, their Color and a boolean "Expensive Product" that return true if the price is higher than 5$.
+
+table Products = with
+  [| as Product  , as Color    , as Price |]
+  [| "shirt"     , "white,grey", 10.50    |]
+  [| "pants"     , "blue"      , 15.00    |]
+  [| "hat"       , "red"       , 5.25     |]
+  [| "big hat"   , "red"       , 20     |]
+  [| "jeans"     , "blue"      , 10     |]
+
+///# ANSWER
+/// Two possible answers
+show table "Answer 1 - Products" with
+  Products.Product
+  Products.Price > 5 as "Expensive Product"
+
+show table "Answer 2 - Products" with
+  Products.Product
+  not (Products.Price <= 5) as "Expensive Product"
+
+///# ANSWER
+
+show markdown "" with """
+
+## Statement
+
+The keyword 'not 'is used to return the negation of a boolean.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+
+Display a table with the products, their Color and a boolean "Expensive Product" that return true if the price is higher than 5$.
+
+## Envision Code
+```
+table Products = with
+  [| as Product  , as Color    , as Price |]
+  [| "shirt"     , "white,grey", 10.50    |]
+  [| "pants"     , "blue"      , 15.00    |]
+  [| "hat"       , "red"       , 5.25     |]
+  [| "big hat"   , "red"       , 20     |]
+  [| "jeans"     , "blue"      , 10     |]
+
+```
+
+# ANSWER
+Two possible answers
+```
+show table "Answer 1 - Products" with
+  Products.Product
+  Products.Price > 5 as "Expensive Product"
+
+show table "Answer 2 - Products" with
+  Products.Product
+  not (Products.Price <= 5) as "Expensive Product"
+
+```
+"""

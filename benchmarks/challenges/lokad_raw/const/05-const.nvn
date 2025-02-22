@@ -1,0 +1,25 @@
+///05-Const
+///The const keyword indicates that the value taken by a variable is known at compile time and that
+///it won’t change later at runtime. Those variables are primarily intended to control the files
+///being read.
+///1. What is the result of the assert test below assuming today is the 15th of December?
+///2. Which days of the year 2025 would pass the test?
+const fileRead = match dayNum(today()) with
+  1 -> "/clean/NewCatalog.ion"
+  .. -> "/clean/OldCatalog.ion"
+
+read "\{fileRead}" as _Catalog
+
+show assert "Test" with
+  contains(same(Files.Path) when(Files.Alias == "_Catalog"), "New") as "Test"
+
+///ANSWER
+///1. The assert "Test" will FAIL. Since it is assumed that today() = December 15th then the filRead const
+///evaluates to "/clean/OldCatalog.ion". That file is read as "_Catalog". The assert tests if the
+///file aliased "_Catalog" contains "New" in its path. This is NOT the case for "/clean/OldCatalog.ion" hence
+///the test is false and the assert tile FAILS.
+
+///2. To pass the assert test, the file read under Alias "_Catalog" must contain "New" in its path.
+///That alias is read through the "fileRead" const. The "fileRead" const contains "New" in its path
+///when dayNum(today()) is 1. Therefore the test will be passed for each first day of each month in 2025 i.e
+///2025-01-01 / 2025-02-01 / 2025-03-01 ... 2025-12-01

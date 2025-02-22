@@ -1,0 +1,38 @@
+///Considering the table Input as given below, compute the number of available cars per car model, the number of different available colors per car,
+///the average, maximum and minimum price for each car (using the price as value indicator). Compute the results directly in the tile displaying the table.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// display the 'Input' table with the results
+// use the stylecode {unit: "€"} to display the price currency
+// use the 'group by' keyword at the end to aggregate the different values
+show table "Input" with
+  Input.Car
+  //compute the number of lines in the table Input per car
+  count(Input.*) as "# available cars"
+  //compute the number of different colors in the table Input per car
+  distinct(Input.Color) as "# different colors"
+  //compute the average price
+  avg(Input.Price) as "Avg price" {unit: "€"}
+  //compute the maximum price
+  max(Input.Price) as "Max price" {unit: "€"}
+  //compute the minimum price
+  min(Input.Price) as "Min price" {unit: "€"}
+  //aggregate by Car
+  group by Input.Car

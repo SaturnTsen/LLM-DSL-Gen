@@ -1,0 +1,47 @@
+///01-where
+
+/// The keyword "where" generally denotes a table being filtered in Envision
+
+/// Consider table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Rewrite vector "Color" where original values contains "," by keeping the first string before ",".
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+where contains(Products.Color,",")
+  Products.Color = field(Products.Color,",",0)
+
+show markdown "" with """
+
+# 01-where
+
+## Statement
+
+The keyword "where" generally denotes a table being filtered in Envision
+
+Consider table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Rewrite vector "Color" where original values contains "," by keeping the first string before ",".
+
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+where contains(Products.Color,",")
+  Products.Color = field(Products.Color,",",0)
+
+
+"""

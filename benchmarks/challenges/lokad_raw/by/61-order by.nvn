@@ -1,0 +1,29 @@
+///Considering the table Input as given below, display the table and order the results first by car name then by highest average price by car.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+// Cloned from '/LLM/by/60-order by' on 2024-12-06
+// Cloned from '/LLM/by/60-order by' on 2024-12-06
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// display the 'Input' table with the results
+// use the stylecode {unit: "€"} to display the price currency
+show table "Input" with
+  Input.Car
+  Input.Color
+  Input.Price {unit: "€"}
+  order by Input.Car, avg(Input.Price) by Input.Car desc

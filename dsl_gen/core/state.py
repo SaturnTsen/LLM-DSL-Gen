@@ -102,7 +102,9 @@ def visualize_state(state: RAGState) -> None:
         # Display Ground Truth and Reference Answer
         if state.get('ground_truth'):
             display(
-                Markdown(f"**Ground Truth Answer:** `{state['ground_truth']}`"))
+                Markdown("**Ground Truth Answer:**\n\n" +
+                         state['ground_truth']))
+
         if state.get('ref'):
             display(Markdown(f"**Reference Answer:** `{state['ref']}`"))
 
@@ -112,14 +114,18 @@ def visualize_state(state: RAGState) -> None:
             for doc in state['docs']:
                 # Assuming each document has a `text` attribute for its content
                 # Show a preview of the document
-                display(Markdown(f"- `{doc.page_content[:200]}...`"))
+                if hasattr(doc, 'page_content'):
+                    display(Markdown(f"- `{doc.page_content[:200]}...`"))
+                else:
+                    display(Markdown(f"- `{doc['page_content'][:200]}...`"))
 
         # Display AI Raw Completion and Final Completion
         if state.get('raw_completion'):
             display(
                 Markdown(f"**Raw Completion:** `{state['raw_completion']}`"))
         if state.get('completion'):
-            display(Markdown(f"**Final Completion:** `{state['completion']}`"))
+            display(Markdown("**Final Completion:**\n\n```envision\n"
+                             + state['completion'] + "\n```"))
 
         # Display Compilation Results (for coding challenges)
         if state.get('compilation_result'):
@@ -141,7 +147,10 @@ def visualize_state(state: RAGState) -> None:
             display(Markdown("**Messages:**"))
             for message in state['messages']:
                 # Assuming the 'message' has a 'content' attribute to display
-                display(Markdown(f"- `{message.content}`"))
+                if hasattr(message, 'content'):
+                    display(Markdown(f"- `{message.content}`"))
+                else:
+                    display(Markdown(f"- `{message['content']}`"))
 
     else:
         # Fallback to console plain text visualization
@@ -157,7 +166,10 @@ def visualize_state(state: RAGState) -> None:
         if docs:
             for doc in docs:
                 # Preview first 200 characters
-                print(f"- {doc.page_content[:200]}...")
+                if hasattr(doc, 'page_content'):
+                    print(f"- {doc.page_content[:200]}...")
+                else:
+                    print(f"- {doc['page_content'][:200]}...")
         else:
             print("No documents retrieved.")
 
@@ -180,4 +192,7 @@ def visualize_state(state: RAGState) -> None:
             print("\nMessages:")
             for message in state['messages']:
                 # Assuming the 'message' has a 'content' attribute to display
-                print(f"- {message.content}")
+                if message.content:
+                    print(f"- {message.content}")
+                else:
+                    print(f"- {message}")

@@ -1,0 +1,49 @@
+/// Considering the table ColorCar as given below, calculate the average price for all cars, then display the list of red cars priced below the average price.
+
+table ColorCar = with
+  [| as Car, as Color, as Size  , as Price |] // column header
+  [| "Clio",    "red" , 3 , 10k   |]
+  [| "Megane", "green" , 5 , 11k  |]
+  [| "Hummer", "gold" , 9 , 60k   |]
+  [| "Porche", "red" , 3 ,100k    |]
+  [| "Mini",   "red" , 5 , 45k    |]
+  [| "Hummer 2", "gold" , 9 , 70k |]
+
+
+/// ANSWER
+ColorCar.AveragePrice = avg(ColorCar.Price) by 1
+
+
+where ColorCar.AveragePrice >= ColorCar.Price and ColorCar.Color == "red"
+  show table "Selected Car" with
+    ColorCar.Car
+
+
+show markdown "" with """
+
+Considering the table ColorCar as given below, calculate the average price for all cars, then display the list of red cars priced below the average price.
+
+
+```
+table ColorCar = with
+  [| as Car, as Color, as Size  , as price |] // column header
+  [| "Clio",    "red" , 3 , 10k   |]
+  [| "Megane", "green" , 5 , 11k  |]
+  [| "Hummer", "gold" , 9 , 60k   |]
+  [| "Porche", "red" , 3 ,100k    |]
+  [| "Mini",   "red" , 5 , 45k    |]
+  [| "Hummer 2", "gold" , 9 , 70k |]
+```
+
+
+# ANSWER
+
+```
+ColorCar.AveragePrice = avg(ColorCar.Price) by 1
+
+where ColorCar.AveragePrice >= ColorCar.Price and ColorCar.Color == "red"
+  show table "Selected Car" with
+    ColorCar.Car
+```
+
+"""

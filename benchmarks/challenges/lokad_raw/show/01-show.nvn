@@ -1,0 +1,26 @@
+///Considering the table Input as given below, display the table
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// display the 'Input' table with all its columns
+show table "Input" with
+  Input.Car
+  Input.Color
+  Input.Price {unit: "€"}
+

@@ -1,0 +1,47 @@
+///Considering the table Input as given below, create a table Catalog from the table Input with every combination of Car and Color.
+///Compute the average price for each car, for each color and for each combination of car and color (using the price as value indicator) then display the results.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// create the 'Catalog' table in 2 steps
+// step 1: define the 'Catalog' table using the 'by' keyword
+table Catalog = by [Input.Car, Input.Color]
+// step 2: create the primary columns by aggregating from the 'Input' table into the 'Catalog' table
+Catalog.Car = same(Input.Car)
+Catalog.Color = same(Input.Color)
+
+// compute the average price per car by aggregating from the 'Input' table into the 'Catalog' table
+// specify the link using the by-at keywords
+Catalog.AvgPriceCar = avg(Input.Price) by Input.Car at Catalog.Car
+
+// compute the average price per color by aggregating from the 'Input' table into the 'Catalog' table
+// specify the link using the by-at keywords
+Catalog.AvgPriceColor = avg(Input.Price) by Input.Color at Catalog.Color
+
+// compute the average price per car and color by aggregating from the 'Input' table into the 'Catalog' table
+Catalog.AvgPrice = avg(Input.Price)
+
+// display the 'Catalog' table
+// use the stylecode {unit: "€"} to display the price currency
+show table "Catalog" with
+  Catalog.Car
+  Catalog.Color
+  Catalog.AvgPriceCar {unit: "€"}
+  Catalog.AvgPriceColor {unit: "€"}
+  Catalog.AvgPrice {unit: "€"}

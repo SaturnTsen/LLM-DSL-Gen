@@ -1,0 +1,41 @@
+///Considering the table Input as given below, compute the average price for each car and for each color (using the price as value indicator).
+///Then create two flags to identify prices under both averages. Display the results in the same table.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// compute the average price by aggregating from the 'Input' table into itself
+Input.AvgPriceCar = avg(Input.Price) by Input.Car
+Input.AvgPriceColor = avg(Input.Price) by Input.Color
+
+// create the flags
+Input.IsUnderAvgCar = Input.Price < Input.AvgPriceCar
+Input.IsUnderAvgColor = Input.Price < Input.AvgPriceColor
+
+
+// display the 'Input' table with the results
+// use the stylecode {booleans: "✔️/❌"} to aesthetically display the booleans
+// use the stylecode {unit: "€"} to display the price currency
+show table "Input" {booleans: "✔️/❌"} with
+  Input.Car
+  Input.Color
+  Input.Price {unit: "€"}
+  Input.AvgPriceCar {unit: "€"}
+  Input.IsUnderAvgCar
+  Input.AvgPriceColor {unit: "€"}
+  Input.IsUnderAvgColor

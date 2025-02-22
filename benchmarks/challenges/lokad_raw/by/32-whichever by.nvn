@@ -1,0 +1,44 @@
+///Considering the table Input as given below, create a table Car from the table Input with the values of the column Car.
+///For each car compute the number of lines, the number of different colors and the average price (using the price as value indicator) then display the results.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// create the 'Car' table in 2 steps
+// step 1: define the 'Car' table using the 'whichever by' keyword
+table Car = by [Input.Car]
+// step 2: create the primary columns by aggregating from the 'Input' table into the 'Car' table
+Car.Car = same(Input.Car)
+
+// compute the number of lines price per car by aggregating from the 'Input' table into the 'Car' table
+Car.NbLines = count(Input.*)
+
+// compute the number of different colors per car by aggregating from the 'Input' table into the 'Car' table
+Car.NbColor = distinct(Input.Color)
+
+// compute the average price per car by aggregating from the 'Input' table into the 'Car' table
+Car.AvgPrice = avg(Input.Price)
+
+
+// display the 'Car' table
+// use the stylecode {unit: "€"} to display the price currency
+show table "Car" with
+  Car.Car
+  Car.NbLines
+  Car.NbColor
+  Car.AvgPrice {unit: "€"}

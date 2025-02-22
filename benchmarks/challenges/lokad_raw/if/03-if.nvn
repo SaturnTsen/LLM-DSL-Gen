@@ -1,0 +1,68 @@
+/// 01-if : if statement within a user-defined function
+
+/// The if statement introduces a branch block within a user-defined function.
+/// A branch refers to an instruction that tells the computer to execute a different part of a program
+/// rather than executing statements one by one.
+/// Branches are supported by functions through the keywords if .. else if .. else ...
+
+/// Create a user defined function mySwap taking two scalar arguments x and y.
+/// This pure function returns a table-free tuple containing x and y in a specific order depenging on the following rule.
+/// If x is strictly greater than y then x and y are swapped and the function returns a tuple with y first and x last.
+/// Otherwise x and y are not swapped and the function returns a tuple with x first and y last.
+
+/// Display the result of applying this function to two scalars 4 and 2
+
+
+def pure mySwap(x: number, y: number) with
+  a = 0
+  b = 0
+  if x > y
+    a = y
+    b = x
+  else
+    a = x
+    b = y
+  return (a, b)
+
+x, y = mySwap(4, 2)
+
+show summary "" with x, y
+
+
+show markdown "" with """
+
+# 01-if : basic if ternary operator
+
+## Statement
+
+The if statement introduces a branch block within a user-defined function.
+A branch refers to an instruction that tells the computer to execute a different part of a program
+rather than executing statements one by one.
+Branches are supported by functions through the keywords if .. else if .. else ...
+
+Create a user defined function mySwap taking two scalar arguments x and y.
+This pure function returns a table-free tuple containing x and y a specific order.
+If x is trictly greater than y then x and y are swapped and the function returns a tuple with y first and x last.
+Otherwise x and y are not swapped and the function returns a tuple with x first and y last.
+
+Display the result of applying this function to the two scalars 4 and 2
+
+## Envision Code
+
+def pure mySwap(x: number, y: number) with
+  a = 0
+  b = 0
+  if x > y
+    a = y
+    b = x
+  else
+    a = x
+    b = y
+  return (a, b)
+
+x, y = mySwap(4, 2)
+
+show summary "" with x, y
+
+
+"""

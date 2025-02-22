@@ -1,5 +1,5 @@
 {
-  "question": "How can I show the date of orange?",
+  "question": "```envision\ntable Orders[Pid] = with\n  [| as Pid, as Date, as Quantity |]\n  [| \"apple\",  date(2020, 4, 15), 3 |]\n  [| \"pear\",  date(2020, 4, 16), 7 |]\n  [| \"orange\", date(2020, 4, 17), 2 |]\n```\nHow can I show the date of orange ?\n(You should first copy the code above)",
   "answer": "```envision\ntable Orders[Pid] = with\n  [| as Pid, as Date, as Quantity |]\n  [| \"apple\",  date(2020, 4, 15), 3 |]\n  [| \"pear\",  date(2020, 4, 16), 7 |]\n  [| \"orange\", date(2020, 4, 17), 2 |]\nshow scalar \"\" with Orders.Date[\"orange\"] // 'Apr 17, 2020'\n```",
   "ref": [],
   "type": "coding"

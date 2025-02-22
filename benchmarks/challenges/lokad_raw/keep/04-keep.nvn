@@ -1,0 +1,56 @@
+///04-keep
+///The keyword keep has two uses in Envision, either to avoid an identation, or to define the state of a process.
+///When the keyword keep appears at the start of a where statement, the filter applies until the end of scope.
+///When the keyword keep appears at the start of a span statement, the UNfilter applies until the end of the scope.
+///At the beginning of a process block, the variables that are part of the state of the process can be declared with the keyword keep.
+///In a for loop that enumerates the values of a column, the keyword keep is used to declare the variables part of the state of the loop.
+///Idem, with a each loop, that enumerates the lines of a table
+
+///Consider the table named "Products" with primary dimension "ref" and three additional vectors "Product", "Color", "Price":
+/// - ref: uuid of the product, primary dimension of the table
+/// - Product: the product type
+/// - Color: the color of the product
+/// - Price: the unit price of the product
+///Consider additionally, the table named "Orders" with primary dimension "orderid" with secondary dimension "ref" and additional vectors "OrderDate", "Qty":
+///- ref: uuid of the product, secondary dimension of the table
+///- OrderDate: the date at which the product was ordered
+///- Qty: the quantity ordered for
+///Create the date dimension using keep span. The date dimensions should span from the first day of the year of the
+///smallest OrderDate found in Orders to the last day of NEXT year of the largest OrderDate found in Orders.
+///The period strictly after the largest OrderDate found in Orders is referenced as the future.
+///The period before the largest OrderDate found in Orders is referenced as the past.
+///Compute the past daily sales amount.
+///Assuming future sales are shifted 365 days from past ones and doubled in amount, complete the daily sales table.
+///Display a linechart with daily sales amount (past and future).
+
+table Products[ref] = with
+  [| as ref , as Product, as Color    , as Price |]
+  [| "1"      , "shirt"   , "white,grey", 10.50    |]
+  [| "2"      , "pants"   , "blue"      , 15.00    |]
+  [| "3"      , "hat"     , "red"       , 5.25     |]
+
+table Orders[orderid] = with
+  [| as orderid, as ProductRef, as OrderDate , as Qty|]
+  [| "order-1" , "1"     , date(2024,1,18)   , 4     |]
+  [| "order-2" , "2"     , date(2024,3,15)   , 1     |]
+  [| "order-3" , "1"     , date(2024,7,21)   , 2     |]
+  [| "order-4" , "1"     , date(2024,8,6)    , 2     |]
+  [| "order-5" , "1"     , date(2024,9,19)   , 1     |]
+  [| "order-6" , "3"     , date(2024,10,4)   , 1     |]
+expect Orders.ref = Orders.ProductRef
+
+///ANSWER
+keep span date=[yearStart(min(Orders.OrderDate))..yearEnd(year(max(Orders.OrderDate))+1)]//creates the date dimension with correct span
+expect Orders.date = Orders.OrderDate //creates the date dimension as a secondary dimension in Orders table
+
+Day.IsPast = date <= max(Orders.OrderDate)
+Day.IsFuture =  date > max(Orders.OrderDate)
+
+Day.WeeklySales_Past = if Day.IsPast then sum(Orders.Qty*Products.Price) else 0
+Day.WeeklySales_Future = if Day.IsFuture then Day.WeeklySales_Past[-365]*2 else 0 //using lag operator to fetch "past" year sales, *2 since doubled
+
+Day.WeeklySales = if Day.IsPast then Day.WeeklySales_Past else Day.WeeklySales_Future
+
+show linechart "Weekly sales amount" with
+  Day.WeeklySales as "Amount sold" {unit:" €"}
+  group by date

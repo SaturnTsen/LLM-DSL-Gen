@@ -1,0 +1,48 @@
+///Considering the table Input as given below, create a table Catalog from the table Input with every combination of Car and Color.
+///Compute the minimum price for each car, for each color and for each combination of car and color. Display the table Catalog.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// create the 'Catalog' table in 2 steps
+// step 1: define the 'Catalog' table using the 'whichever by' keyword
+table Catalog = whichever by [Input.Car, Input.Color]
+// step 2: create the primary column by aggregating from the 'Input' table into the 'Catalog' table
+Catalog.Car = same(Input.Car)
+Catalog.Color = same(Input.Color)
+
+// compute the minimum price per car by aggregating from the 'Input' table into the 'Catalog' table
+// specify the link using the by-at keywords
+Catalog.MinPriceCar = min(Input.Price) by Input.Car at Catalog.Car
+
+// compute the minimum price per color by aggregating from the 'Input' table into the 'Catalog' table
+// specify the link using the by-at keywords
+Catalog.MinPriceColor = min(Input.Price) by Input.Color at Catalog.Color
+
+// compute the minimum price per car and color by aggregating from the 'Input' table into the 'Catalog' table
+Catalog.MinPrice = min(Input.Price)
+
+
+// display the 'Catalog' table
+// use the stylecode {unit: "€"} to display the price currency
+show table "Catalog" with
+  Catalog.Car
+  Catalog.Color
+  Catalog.MinPriceCar {unit: "€"}
+  Catalog.MinPriceColor {unit: "€"}
+  Catalog.MinPrice {unit: "€"}

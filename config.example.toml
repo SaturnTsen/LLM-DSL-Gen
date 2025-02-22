@@ -24,12 +24,14 @@ Your task is to generate response to the given challenge. \
 Some challenges will ask you to generate Envision code,\
 others will ask you to explain given code or answer questions related to the Envision language. \
 Do not output any intermediate thinking or explanation, only give the final answer."""
+temperature = 0.5
 
 [COMPILER]
 max_retries = 3
 
 [JUDGE]
 active_model = "openai" # either "openai" or "ollama" or "deepseek" or "mistralai"
+temperature = 0.5
 max_retries = 3
 personality = """**Role Definition**  
 You are a Logical Correctness Auditor specializing in assessing the validity of solutions.

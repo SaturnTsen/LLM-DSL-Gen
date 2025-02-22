@@ -1,0 +1,35 @@
+///Considering the table Input as given below, display a chart comparing the number of cars per Car model as a 'bar' series
+/// and the average price per Car model as a 'line' series.
+/// table Input = with
+///   [| as Car, as Color, as Price |]
+///   [| "Clio", "red" , 25000|]
+///   [| "Clio", "green" , 19000 |]
+///   [| "Megane", "yellow" , 20000 |]
+///   [| "Megane", "yellow" , 21000 |]
+///   [| "Megane", "black" , 27000 |]
+///   [| "Hummer", "gold" , 150000 |]
+
+///ANSWER
+table Input = with
+  [| as Car, as Color, as Price |]
+  [| "Clio", "red" , 25000|]
+  [| "Clio", "green" , 19000 |]
+  [| "Megane", "yellow" , 20000 |]
+  [| "Megane", "yellow" , 21000 |]
+  [| "Megane", "black" , 27000 |]
+  [| "Hummer", "gold" , 150000 |]
+
+// display the chart
+// use the {vaxis {right {unit: "$"}} to set a unit to the right axis
+show chart "Car information" {vaxis { right { unit: "$" }}} with
+  // define the horizontal axis: the car model
+  haxis by Input.Car
+
+  // plot the different series
+  plot by Input.Car
+    // use the stylecode 'seriesType' to display the bars
+    count(Input.*) as "# of cars" {seriesType: bar}
+    // the 'line' seriesType is the default value so no stylecode needed
+    // use the stylecode {unit: "$"} to display the price currency
+    // use the stylecode {vaxis: right} to attach the series to the right axis
+    avg(Input.Price) as "Average price" {vaxis: right; unit: "$"}

@@ -1,0 +1,69 @@
+///04-write - write using a schema and a patch schema
+
+/// The keyword write introduces a block used to define a section of vectors, associated to a given table,
+/// to be persisted as a flat file stored in file hosting service named BigFiles.
+
+/// Consider a table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Store this table with its three vectors on BigFiles in a repertory clean by changing vector named Product into Article.
+///  Use a schema with columns "Article", "Color" and "Price"
+///  Use a path schema
+
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+schema Products with
+  Article : text
+  Color : text
+  Price : number
+
+schema '/clean/Products.ion' with
+  schema Products
+
+write Products as '/clean/Products.ion' with
+  Article = Products.Product
+
+show markdown "" with """
+
+# 04-write - write using a schema and a patch schema
+
+## Statement
+
+The keyword write introduces a block used to define a section of vectors, associated to a given table,
+to be persisted as a flat file stored in file hosting service named BigFiles.
+
+Consider a table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Store this table with its three vectors on BigFiles in a repertory clean by changing vector named Product into Article
+Use a schema with columns "Article", "Color" and "Price"
+Use a path schema
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+schema Products with
+  Article : text
+  Color : text
+  Price : number
+
+schema '/clean/Products.ion' with
+  schema Products
+
+write Products as '/clean/Products.ion' with
+  Article = Products.Product
+
+
+"""

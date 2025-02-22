@@ -12,7 +12,7 @@ logger = logging.getLogger('dsl_gen')
 
 
 def _generate_answer(messages: List[BaseMessage]) -> AIMessage:
-    client = getClient(CFG.CODER.active_model)
+    client = getClient(CFG.CODER.active_model, CFG.CODER.temperature)
     response = client.invoke(messages)
     logger.debug("Model's response:\n %s\n", response.model_dump()["content"])
     return response
