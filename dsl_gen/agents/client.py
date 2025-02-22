@@ -3,6 +3,7 @@
 
 from ..config import API
 from langchain_openai import ChatOpenAI
+from langchain_mistralai import ChatMistralAI
 
 import logging
 
@@ -12,8 +13,10 @@ _llm_clients = {
     'openai': None,
     'ollama': None,
     'deepseek': None,
+    'mistralai': None,
 }
 
+# For MistralAI version, replace every "open" by "mistral" in the following code
 
 def getClient(backend) -> ChatOpenAI:
 
@@ -26,6 +29,7 @@ def getClient(backend) -> ChatOpenAI:
             'openai': API.MODEL_CFG.OpenAI,
             'ollama': API.MODEL_CFG.Ollama,
             'deepseek': API.MODEL_CFG.DeepSeek,
+            'mistralai': API.MODEL_CFG.MistralAI
         }[backend]
 
         _llm_clients[backend] = ChatOpenAI(

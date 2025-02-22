@@ -18,7 +18,7 @@ chunk_size = 500
 chunk_overlap = 20
 
 [CODER]
-active_model = "mistral" # either "openai" or "ollama" or "deepseek" or "mistral"
+active_model = "openai" # either "openai" or "ollama" or "deepseek" or "mistralai"
 personality = """You are a proficient coder in a Domain Specific Language called Envision. \
 Your task is to generate response to the given challenge. \
 Some challenges will ask you to generate Envision code,\
@@ -29,7 +29,7 @@ Do not output any intermediate thinking or explanation, only give the final answ
 max_retries = 3
 
 [JUDGE]
-active_model = "mistral" # either "openai" or "ollama" or "deepseek" or "mistral"
+active_model = "openai" # either "openai" or "ollama" or "deepseek" or "mistralai"
 max_retries = 3
 personality = """**Role Definition**  
 You are a Logical Correctness Auditor specializing in assessing the validity of solutions.
