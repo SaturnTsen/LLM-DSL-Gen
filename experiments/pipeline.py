@@ -43,10 +43,6 @@ if user_input.lower() == 'y':
 
 # Run the benchmarks
 for file_name in os.listdir(challenges_path):
-    if not file_name.endswith(".json"):
-        continue
-    if not file_name.endswith("14.json") and not file_name.endswith("15.json"):
-        continue
     print(f"[PIPELINE] Processing {file_name}")
     selected_file = Path(challenges_path) / file_name
     result = flow.invoke({"challenge_path": selected_file})
