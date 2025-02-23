@@ -1,0 +1,6 @@
+{
+    "question": "/// 01-if : basic if ternary operator\n\n/// The ternary operator if-then-else takes a Boolean as first argument,\n/// and two identically typed values as second arguments.\n/// The resulting syntax if c then a else b is treated as an expression.\n\n/// Consider a table named Products where three vectors are defined :\n///  - Product\n///  - Color\n///  - Price\n\n/// Create a third vector PriceCategory which contains two possible values\n/// - Cheap for products with a Price strictly lower than 5\n/// - Expensive for the other products\n\n/// Display the table Products with the three original vectors and the new PriceCategory vector",
+    "answer": "```envision\ntable Products = with\n  [| as Product, as Color    , as Price |]\n  [| \"shirt\"   , \"white,grey\", 10.50    |]\n  [| \"pants\"   , \"blue\"      , 15.00    |]\n  [| \"hat\"     , \"red\"       , 5.25     |]\n\nProducts.PriceCategory = if Products.Price < 5 then \"Cheap\" else \"Expensive\"\n\nshow table \"Products\" with\n  Products.Color\n  Products.Price\n  Products.Product\n  Products.PriceCategory\n```",
+    "ref": "if_index",
+    "type": "coding"
+}

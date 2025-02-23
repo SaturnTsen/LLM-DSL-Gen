@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, create a table Catalog from the table Input with every combination of Car and Color.\nDisplay the table Catalog.\n\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "```envision\ntable Input = with\n  [| as Car, as Color |]\n  [| \"Clio\", \"red\" |]\n  [| \"Clio\", \"green\" |]\n  [| \"Megane\", \"yellow\" |]\n  [| \"Megane\", \"black\" |]\n  [| \"Hummer\", \"gold\" |]\n\n// create the 'Color' table in 2 steps\n// step 1: define the 'Color' table using the 'single by' keyword\ntable Catalog = single by [Input.Car, Input.Color]\n// step 2: create the primary column by aggregating from the 'Input' table into the 'Color' table\nCatalog.Car = same(Input.Car)\nCatalog.Color = same(Input.Color)\n\n// display the 'Color' table\nshow table \"Color\" with\n  Catalog.Car\n  Catalog.Color\n```",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

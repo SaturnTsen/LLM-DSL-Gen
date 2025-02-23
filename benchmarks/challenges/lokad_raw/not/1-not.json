@@ -1,0 +1,6 @@
+{
+    "question": "///1-not\n\n/// The keyword 'not ' is used to return the negation of a boolean.\n\n/// Consider a table named Products where three vectors are defined :\n///  - Product\n///  - Color\n///  - Price\n///  Displays the products and their prices only if the product is not red.",
+    "answer": "```envision\nwhere not (Products.Color == \"red\")\n  show table \"Products\" with\n    Products.Product\n    Products.Price\n```",
+    "ref": "",
+    "type": "coding"
+}

@@ -1,0 +1,6 @@
+{
+    "question": "05-Const\n\nThe const keyword indicates that the value taken by a variable is known at compile time and that it won’t change later at runtime. Those variables are primarily intended to control the files being read.\n\n1. What is the result of the assert test below assuming today is the 15th of December?\n2. Which days of the year 2025 would pass the test?\n\nconst fileRead = match dayNum(today()) with\n  1 -> \"/clean/NewCatalog.ion\"\n  .. -> \"/clean/OldCatalog.ion\"\n\nread \"{fileRead}\" as _Catalog\n\nshow assert \"Test\" with\n  contains(same(Files.Path) when(Files.Alias == \"_Catalog\"), \"New\") as \"Test\"",
+    "answer": "1. The assert \"Test\" will FAIL. Since it is assumed that today() = December 15th then the fileRead const evaluates to \"/clean/OldCatalog.ion\". That file is read as \"_Catalog\". The assert tests if the file aliased \"_Catalog\" contains \"New\" in its path. This is NOT the case for \"/clean/OldCatalog.ion\" and therefore the test fails.\n\n2. To pass the assert test, the file read under alias \"_Catalog\" must contain \"New\" in its path. That happens when fileRead produces \"/clean/NewCatalog.ion\", which is the case when dayNum(today()) equals 1. Thus, the test will pass on the first day of each month in 2025: 2025-01-01, 2025-02-01, 2025-03-01, …, 2025-12-01.",
+    "ref": "05-const",
+    "type": "QA"
+}

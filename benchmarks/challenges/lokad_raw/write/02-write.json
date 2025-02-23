@@ -1,0 +1,6 @@
+{
+    "question": "02-write - basic write with column renaming\n\nThe keyword write introduces a block used to define a section of vectors, associated to a given table, to be persisted as a flat file stored in file hosting service named BigFiles.\n\nConsider a table named Products where three vectors are defined:\n - Product\n - Color\n - Price\n\nStore this table with its three vectors on BigFiles in a repertory clean by changing the vector named Product into Article.",
+    "answer": "table Products = with\n  [| as Product, as Color    , as Price |]\n  [| \"shirt\"   , \"white,grey\", 10.50    |]\n  [| \"pants\"   , \"blue\"      , 15.00    |]\n  [| \"hat\"     , \"red\"       , 5.25     |]\n\nwrite Products as \"/clean/Products.ion\" with\n  Article = Products.Product\n  Color = Products.Color\n  Price = Products.Price",
+    "ref": "",
+    "type": "coding"
+}

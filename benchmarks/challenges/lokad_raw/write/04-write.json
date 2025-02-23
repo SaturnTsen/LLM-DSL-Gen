@@ -1,0 +1,6 @@
+{
+    "question": "///04-write - write using a schema and a patch schema\n\n/// The keyword write introduces a block used to define a section of vectors, associated to a given table,\n/// to be persisted as a flat file stored in file hosting service named BigFiles.\n\n/// Consider a table named Products where three vectors are defined :\n///  - Product\n///  - Color\n///  - Price\n///  Store this table with its three vectors on BigFiles in a repertory clean by changing vector named Product into Article.\n///  Use a schema with columns \"Article\", \"Color\" and \"Price\"\n///  Use a path schema",
+    "answer": "table Products = with\n  [| as Product, as Color    , as Price |]\n  [| \"shirt\"   , \"white,grey\", 10.50    |]\n  [| \"pants\"   , \"blue\"      , 15.00    |]\n  [| \"hat\"     , \"red\"       , 5.25     |]\n\nschema Products with\n  Article : text\n  Color : text\n  Price : number\n\nschema '/clean/Products.ion' with\n  schema Products\n\nwrite Products as '/clean/Products.ion' with\n  Article = Products.Product",
+    "ref": "",
+    "type": "coding"
+}

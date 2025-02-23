@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, display an alert that checks if the table is empty.\n\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "table Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\n// display the alert as an assert tile which will test the condition\nshow assert \"Check if table is empty\" with any(Input.*) as \"Input table is empty.\"",
+    "ref": "",
+    "type": "coding"
+}

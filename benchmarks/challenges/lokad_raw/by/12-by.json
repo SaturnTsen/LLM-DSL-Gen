@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, compute the average price for each car and for each color (using the price as value indicator). Then create two flags to identify prices under both averages. Display the results in the same table. table Input = with [| as Car, as Color, as Price |] [| \"Clio\", \"red\" , 25000|] [| \"Clio\", \"green\" , 19000 |] [| \"Megane\", \"yellow\" , 20000 |] [| \"Megane\", \"yellow\" , 21000 |] [| \"Megane\", \"black\" , 27000 |] [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "```envision\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\n// compute the average price by aggregating from the 'Input' table into itself\nInput.AvgPriceCar = avg(Input.Price) by Input.Car\nInput.AvgPriceColor = avg(Input.Price) by Input.Color\n\n// create the flags\nInput.IsUnderAvgCar = Input.Price < Input.AvgPriceCar\nInput.IsUnderAvgColor = Input.Price < Input.AvgPriceColor\n```",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}
