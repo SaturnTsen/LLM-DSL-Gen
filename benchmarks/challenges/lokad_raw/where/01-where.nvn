@@ -1,6 +1,47 @@
-{
-  "question": "01-where\n\nThe keyword \"where\" generally denotes a table being filtered in Envision.\n\nConsider a table named Products where three vectors are defined:\n  - Product\n  - Color\n  - Price\n\nRewrite vector \"Color\" so that when the original value contains a comma, only the first string before the comma is kept.",
-  "answer": "table Products = with\n  [| as Product, as Color, as Price |]\n  [| \"shirt\", \"white,grey\", 10.50 |]\n  [| \"pants\", \"blue\", 15.00 |]\n  [| \"hat\", \"red\", 5.25 |]\n\nwhere contains(Products.Color,\",\")\n  Products.Color = field(Products.Color,\",\",0)",
-  "ref": "",
-  "type": "coding"
-}
+///01-where
+
+/// The keyword "where" generally denotes a table being filtered in Envision
+
+/// Consider table named Products where three vectors are defined :
+///  - Product
+///  - Color
+///  - Price
+///  Rewrite vector "Color" where original values contains "," by keeping the first string before ",".
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+where contains(Products.Color,",")
+  Products.Color = field(Products.Color,",",0)
+
+show markdown "" with """
+
+# 01-where
+
+## Statement
+
+The keyword "where" generally denotes a table being filtered in Envision
+
+Consider table named Products where three vectors are defined :
+ - Product
+ - Color
+ - Price
+Rewrite vector "Color" where original values contains "," by keeping the first string before ",".
+
+
+## Envision Code
+
+table Products = with
+  [| as Product, as Color    , as Price |]
+  [| "shirt"   , "white,grey", 10.50    |]
+  [| "pants"   , "blue"      , 15.00    |]
+  [| "hat"     , "red"       , 5.25     |]
+
+where contains(Products.Color,",")
+  Products.Color = field(Products.Color,",",0)
+
+
+"""
