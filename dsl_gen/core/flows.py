@@ -64,7 +64,7 @@ def qa_splitter(state: RAGState,
                      state["challenge_path"])
 
         # read the challenge path json file
-        with open(state["challenge_path"]) as f:
+        with open(state["challenge_path"], encoding="utf-8") as f:
             challenge = json.load(f)
         state.update({"challenge_path": str(state["challenge_path"]),
                       "question": challenge["question"],
