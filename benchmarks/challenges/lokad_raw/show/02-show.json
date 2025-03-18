@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, display the maximum price.\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000 |]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "table Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000 |]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\nmaxPrice = max(Input.Price)\n// display the maximum price as a scalar\nshow scalar \"Maximum Price\" {unit: \"€\"} with maxPrice\n\n//Because the operation is simple one can directly compute the result in the 'show' tile\nshow scalar \"Maximum Price\" {unit: \"€\"} with max(Input.Price)",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

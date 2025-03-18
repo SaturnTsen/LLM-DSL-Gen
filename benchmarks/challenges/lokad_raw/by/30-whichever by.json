@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, create a table Car from the table Input with the values from the column Car. Display the table Car.\n\nTable Input is defined as:\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\", 25000 |]\n  [| \"Clio\", \"green\", 19000 |]\n  [| \"Megane\", \"yellow\", 20000 |]\n  [| \"Megane\", \"black\", 27000 |]\n  [| \"Hummer\", \"gold\", 150000 |]",
+    "answer": "```envision\ntable Input = with\n  [| as Car|]\n  [| \"Clio\"|]\n  [| \"Clio\"|]\n  [| \"Megane\"|]\n  [| \"Megane\"|]\n  [| \"Hummer\"|]\n\n// create the 'Car' table in 2 steps\n// step 1: define the 'Car' table using the 'whichever by' keyword\ntable Car = whichever by Input.Car\n// step 2: create the primary column by aggregating from the 'Input' table into the 'Car' table\nCar.Car = same(Input.Car)\n\n// display the 'Car' table\nshow table \"Car\" with\n  Car.Car\n```",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

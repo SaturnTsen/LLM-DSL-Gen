@@ -1,0 +1,6 @@
+{
+    "question": "01-where\n\nThe keyword \"where\" generally denotes a table being filtered in Envision.\n\nConsider a table named Products where three vectors are defined:\n  - Product\n  - Color\n  - Price\n\nRewrite vector \"Color\" so that when the original value contains a comma, only the first string before the comma is kept.",
+    "answer": "table Products = with\n  [| as Product, as Color, as Price |]\n  [| \"shirt\", \"white,grey\", 10.50 |]\n  [| \"pants\", \"blue\", 15.00 |]\n  [| \"hat\", \"red\", 5.25 |]\n\nwhere contains(Products.Color,\",\")\n  Products.Color = field(Products.Color,\",\",0)",
+    "ref": "",
+    "type": "coding"
+}

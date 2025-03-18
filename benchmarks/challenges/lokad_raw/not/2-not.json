@@ -1,0 +1,6 @@
+{
+    "question": "The keyword 'not' is used to return the negation of a boolean.\n\nConsider a table named Products where three vectors are defined:\n- Product\n- Color\n- Price\n\nAnd two tables named Catalog_Store_A and Catalog_Store_B where two vectors are defined:\n- Product\n- Stock\n\nThe tables Catalog_Store provide the catalog of products available in each store and the related stock available.\n\nDisplay a table with the products and their prices only if a product appears in the catalog of Store A and not in Store B.",
+    "answer": "where Products.Product in Catalog_Store_A.Product  and not( Products.Product in Catalog_Store_B.Product )\n  show table \"Products\" with\n    Products.Product\n    Products.Price\n",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

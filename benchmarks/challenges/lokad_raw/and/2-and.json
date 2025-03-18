@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table ColorCar as given below, calculate the average price for all cars, then display the list of red cars priced below the average price.\n\ntable ColorCar = with\n  [| as Car, as Color, as Size  , as Price |] // column header\n  [| \"Clio\",    \"red\" , 3 , 10k   |]\n  [| \"Megane\", \"green\" , 5 , 11k  |]\n  [| \"Hummer\", \"gold\" , 9 , 60k   |]\n  [| \"Porche\", \"red\" , 3 ,100k    |]\n  [| \"Mini\",   \"red\" , 5 , 45k    |]\n  [| \"Hummer 2\", \"gold\" , 9 , 70k |]",
+    "answer": "ColorCar.AveragePrice = avg(ColorCar.Price) by 1\n\nwhere ColorCar.AveragePrice >= ColorCar.Price and ColorCar.Color == \"red\"\n  show table \"Selected Car\" with\n    ColorCar.Car",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

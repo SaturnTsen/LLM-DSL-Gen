@@ -1,0 +1,6 @@
+{
+    "question": "Read the file “/clean/orders.ion” with the columns “OrderId”, “Qty” and “InitDate” and name it “OrdersTable”. Display the OrdersTable and rename the “InitDate” column to “Order Date”.",
+    "answer": "read \"/clean/orders.ion\" as OrdersTable with\n  OrderId : text\n  Qty : number\n  InitDate : date\n\nshow table \"OrdersTable\"  with\n  OrdersTable.OrderId\n  OrdersTable.Qty\n  OrdersTable.InitDate as \"Order Date\"",
+    "ref": "",
+    "type": "coding"
+}

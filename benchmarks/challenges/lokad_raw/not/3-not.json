@@ -1,0 +1,6 @@
+{
+    "question": "The keyword 'not' is used to return the negation of a boolean.\n\nConsider a table named Products where three vectors are defined:\n - Product\n - Color\n - Price\n\nDisplay a table with the products, their Color and a boolean \"Expensive Product\" that returns true if the price is higher than 5$.\n\nTable definition:\n  table Products = with\n    [| as Product, as Color, as Price |]\n    [| \"shirt\", \"white,grey\", 10.50 |]\n    [| \"pants\", \"blue\", 15.00 |]\n    [| \"hat\", \"red\", 5.25 |]\n    [| \"big hat\", \"red\", 20 |]\n    [| \"jeans\", \"blue\", 10 |]",
+    "answer": "table Products = with\n  [| as Product  , as Color    , as Price |]\n  [| \"shirt\"     , \"white,grey\", 10.50    |]\n  [| \"pants\"     , \"blue\"      , 15.00    |]\n  [| \"hat\"       , \"red\"       , 5.25     |]\n  [| \"big hat\"   , \"red\"       , 20     |]\n  [| \"jeans\"     , \"blue\"      , 10     |]\n\nshow table \"Answer 1 - Products\" with\n  Products.Product\n  Products.Price > 5 as \"Expensive Product\"\n\nshow table \"Answer 2 - Products\" with\n  Products.Product\n  not (Products.Price <= 5) as \"Expensive Product\"\n",
+    "ref": "",
+    "type": "coding"
+}

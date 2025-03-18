@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, display the table and order the results from lowest to highest price.\n\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\nCloned from '/LLM/by/60-order by' on 2024-12-06",
+    "answer": "```envision\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\n// display the 'Input' table with the results\n// use the stylecode {unit: \"€\"} to display the price currency\nshow table \"Input\" with\n  Input.Car\n  Input.Color\n  Input.Price {unit: \"€\"}\n  order by Input.Price\n```",
+    "ref": "order-challenge",
+    "type": "coding"
+}

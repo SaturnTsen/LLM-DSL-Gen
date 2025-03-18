@@ -1,0 +1,6 @@
+{
+    "question": "What are the values of A, B and C as computed by the script below?\n\n```envision\ntable ColorCar = with\n  [| as Car, as Color, as Size  , as Price |] // column header\n  [| \"Clio\",    \"red\" , 3 , 10k   |]\n  [| \"Megane\", \"green\" , 5 , 11k  |]\n  [| \"Hummer\", \"gold\" , 9 , 60k   |]\n  [| \"Porche\", \"red\" , 3 ,100k    |]\n  [| \"Mini\",   \"red\" , 5 , 45k    |]\n  [| \"Hummer 2\", \"gold\" , 12 , 70k |]\n\nshow scalar \"A\" with avg(ColorCar.Price) when(ColorCar.Price < 70k and ColorCar.Size <= 7)\n\nwhere not ( ColorCar.Color == \"Gold\") and ColorCar.Price >= 20k\n  show scalar \"B\" with avg(ColorCar.Price)\n\nshow scalar \"C\" with avg(ColorCar.Price)\n```",
+    "answer": "The A value is the average of the Price column when the price is less than 70,000 and the size is less than or equal to 7. Thus, A = (10k + 11k + 45k) / 3 = 22k\n\nThe B value is the average of the Price column when the price is greater than or equal to 20,000 and the color is not gold. Thus, B = (100k + 45k) / 2 = 72500\n\nThe value C is the average of the Price column. Thus, C = (10k + 11k + 60k + 100k + 45k + 70k) / 6 = 98666,66",
+    "ref": "relational-algebra_index",
+    "type": "QA"
+}

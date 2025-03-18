@@ -42,7 +42,15 @@ if user_input.lower() == 'y':
             file.rmdir()
 
 # Run the benchmarks
-for file_name in os.listdir(challenges_path):
+
+list_paths = []
+for root, dirs, files in os.walk(challenges_path):
+    for file in files:
+        list_paths.append(os.path.join(root, file))
+
+for file_name in list_paths:
+    if not file_name.endswith(".json"):
+        continue
     print(f"[PIPELINE] Processing {file_name}")
     selected_file = Path(challenges_path) / file_name
     result = flow.invoke({"challenge_path": selected_file})

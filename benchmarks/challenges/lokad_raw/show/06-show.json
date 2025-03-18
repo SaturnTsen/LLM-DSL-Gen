@@ -1,0 +1,6 @@
+{
+    "question": "Display a form where the number value 'maxPrice' - displayed as Maximum price - can be manually entered. The variables listed for display in this tile are expected to be attached scalar values obtained from a 'read form'.",
+    "answer": "//initialise the variables with the 'read form' tile\nread form with\n  maxPrice : number\n\n//display the form\nshow form \"Parameters\" with\n  // we can't use the stylecode {unit: \"$\"} in a 'form' tile so we write the unit in the text name directly.\n  maxPrice as \"Maximum price ($):\"\n\n//we can also use the stylecode 'formButton' to add a run button to the form\nshow form \"Parameters\" {formButton: \"Save & Run\"} with\n  // we can't use the stylecode {unit: \"$\"} in a 'form' tile so we write the unit in the text name directly.\n  maxPrice as \"Maximum price ($):\"\n",
+    "ref": "",
+    "type": "coding"
+}

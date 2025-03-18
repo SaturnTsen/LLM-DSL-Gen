@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, display a barchart comparing the average price per Car model.\n\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\", 25000 |]\n  [| \"Clio\", \"green\", 19000 |]\n  [| \"Megane\", \"yellow\", 20000 |]\n  [| \"Megane\", \"yellow\", 21000 |]\n  [| \"Megane\", \"black\", 27000 |]\n  [| \"Hummer\", \"gold\", 150000 |]",
+    "answer": "table Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\", 25000 |]\n  [| \"Clio\", \"green\", 19000 |]\n  [| \"Megane\", \"yellow\", 20000 |]\n  [| \"Megane\", \"yellow\", 21000 |]\n  [| \"Megane\", \"black\", 27000 |]\n  [| \"Hummer\", \"gold\", 150000 |]\n\n// display the barchart\n// use the stylecode {unit: \"$\"} to display the price currency\nshow barchart \"Average price per car\" with\n  avg(Input.Price) {unit: \"$\"}\n  group by Input.Car",
+    "ref": "relational-algebra_index",
+    "type": "coding"
+}

@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, display the table\n table Input = with\n   [| as Car, as Color, as Price |]\n   [| \"Clio\", \"red\" , 25000|]\n   [| \"Clio\", \"green\" , 19000 |]\n   [| \"Megane\", \"yellow\" , 20000 |]\n   [| \"Megane\", \"yellow\" , 21000 |]\n   [| \"Megane\", \"black\" , 27000 |]\n   [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "table Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"yellow\" , 21000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]\n\n// display the 'Input' table with all its columns\nshow table \"Input\" with\n  Input.Car\n  Input.Color\n  Input.Price {unit: \"€\"}",
+    "ref": "",
+    "type": "coding"
+}

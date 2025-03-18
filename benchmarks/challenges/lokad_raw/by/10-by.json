@@ -1,0 +1,6 @@
+{
+    "question": "Considering the table Input as given below, create a table Car from the table Input with the values from the column Car.\nDisplay the table Car.\ntable Input = with\n  [| as Car, as Color, as Price |]\n  [| \"Clio\", \"red\" , 25000|]\n  [| \"Clio\", \"green\" , 19000 |]\n  [| \"Megane\", \"yellow\" , 20000 |]\n  [| \"Megane\", \"black\" , 27000 |]\n  [| \"Hummer\", \"gold\" , 150000 |]",
+    "answer": "table Input = with\n  [| as Car|]\n  [| \"Clio\"|]\n  [| \"Clio\" |]\n  [| \"Megane\"|]\n  [| \"Megane\"|]\n  [| \"Hummer\"|]\n\n// create the 'Car' table in 2 steps\n// step 1: define the 'Car' table using the 'by' keyword\ntable Car = by Input.Car\n// step 2: create the primary column by aggregating from the 'Input' table into the 'Car' table\nCar.Car = same(Input.Car)\n\n// display the 'Car' table\nshow table \"Car\" with\n  Car.Car",
+    "ref": "",
+    "type": "coding"
+}
